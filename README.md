@@ -19,7 +19,8 @@ poweronsystem/webframework: "^0.1.0"
 
 ### Básico
 El esquema de la tabla puede ser completado directamente con arrays con los métodos **header** y **body** de la clase Table.
-```
+
+``` php
 //Creamos una instancia
 $table = new Table();
 
@@ -45,7 +46,7 @@ $table->body([
 ### Avanzado
 Se puede ir completando el esquema de la tabla por pasos mediante los métodos **head**, **row**, **cell** y **next**
 
-```
+``` php
 $table = new Table();
 
 //Creamos el encabezado
