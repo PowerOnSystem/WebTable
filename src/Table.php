@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace PowerOn\Utility;
+namespace PowerOn\Table;
 use PowerOn\Exceptions\DevException;
 use function \PowerOn\Application\array_trim;
 

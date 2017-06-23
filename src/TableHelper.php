@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace PowerOn\View\Helper;
+namespace PowerOn\Table;
+use PowerOn\View\Helper\Helper;
 use function \PowerOn\Application\html_serialize;
 use function \PowerOn\Application\array_trim;
 
@@ -137,5 +138,42 @@ class TableHelper extends Helper {
         $r .= $this->end();
         
         return $r;
+    }
+    
+    /**
+     * Paginación de resultados
+     * @param \PowerOn\Table\Pagination $pagination
+     * @return string
+     */
+    public function pagination(Pagination $pagination) {
+        $list = [];
+        $config = [];
+        if ( $pagination->showFirstPage() ) {
+            $list['first_page'] = $this->html->link('1', ['add' => ['query' => ['page' => 1]]]);
+            $config['first_page'] = ['class' => 'first'];
+            $prev_pages = $pagination->getPreviousPages();
+            if ($prev_pages) {
+                $list['previous_pages'] = $this->html->link('...', ['add' => ['query' => ['page' => $prev_pages]]]);
+                $config['previous_pages'] = ['class' => 'previous_pages'];
+            }
+        }
+        
+        for ( $i = $pagination->getStartPagination(); $i <= $pagination->getEndPagination(); ++$i ) {
+            $list[$i] = $this->html->link($i, ['add' => ['query' => ['page' => $i]]]);
+            $config[$i] = ['class' => ($i == $pagination->getCurrentPage() ? 'active' : NULL)];
+        }
+        
+        if ( $pagination->showLastPage() ) {
+            $number_pages = $pagination->getNumberOfPages();
+            $next_pages = $pagination->getNextPages();
+            if ($next_pages) {
+                $list['next_pages'] = $this->html->link('...', ['add' => ['query' => ['page' => $next_pages]]]);
+                $config['next_pages'] = ['class' => 'next_pages'];
+            }
+            $list['last_page'] = $this->html->link($number_pages, ['add' => ['query' => ['page' => $number_pages]]]);
+            $config['last_page'] = ['class' => 'last_page'];
+        }
+        
+        return $this->html->nestedList($list, $pagination->getConfig(), $config);
     }
 }

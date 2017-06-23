@@ -13,11 +13,11 @@
         }
     ],
     "require": {
-        "poweronsystem/webframework": "^0.1.0"
+        "poweronsystem/webframework": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "PowerOn\\Tabe\\": "src"
+            "PowerOn\\Table\\": "src"
         }
     }
 }

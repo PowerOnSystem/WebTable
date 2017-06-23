@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace PowerOn\Utility;
+namespace PowerOn\Table;
 
 /**
  * Inflector
@@ -46,6 +46,11 @@ class Pagination {
      * @var integer
      */
     private $_max_results;
+    /**
+     * Configuración del paginador
+     * @var array
+     */
+    private $_config;
 
     /**
      * Crea una paginación de resultados
@@ -53,10 +58,15 @@ class Pagination {
      * @param integer $max_results Máximos resultados de la tabla
      * @param integer $results_per_page Resultados a mostrar por página
      */
-    public function __construct($current_page, $max_results, $results_per_page) {
+    public function __construct($current_page, $max_results, $results_per_page, array $config = []) {
         $this->_current_page = $current_page;
         $this->_results_per_page = $results_per_page;
         $this->_max_results = $max_results;
+        $this->_config = [
+            'id' => NULL,
+            'class' => NULL,
+            'max_show_pages' => 10,
+        ] + $config;
     }
     
     /**
@@ -107,19 +117,19 @@ class Pagination {
      * Devuelve las próximas 10 páginas o FALSE en caso de que sea el límite
      * @return integer|boolean
      */
-    public function getNextTenPages() {
+    public function getNextPages() {
         $number_of_pages = $this->getNumberOfPages();
         $current_page = $this->getCurrentPage();
-        return $current_page < $number_of_pages - 10 ? $current_page + 10 : FALSE;
+        return $current_page < $number_of_pages - $this->_config['max_show_pages'] ? $current_page + $this->_config['max_show_pages'] : FALSE;
     }
     
     /**
      * Devuelve las 10 páginas anteriores o FALSE en caso de que existan
      * @return integer|boolean
      */
-    public function getPreviousTenPages() {
+    public function getPreviousPages() {
         $current_page = $this->getCurrentPage();
-        return $current_page >= 20 ? $current_page - 10 : FALSE;
+        return $current_page >= ($this->_config['max_show_pages'] * 2) ? $current_page - $this->_config['max_show_pages'] : FALSE;
     }
     
     /**
@@ -127,7 +137,7 @@ class Pagination {
      * @return boolean
      */
     public function showFirstPage() {
-        return $this->getCurrentPage() >= 10;
+        return $this->getCurrentPage() >= $this->_config['max_show_pages'];
     } 
     
     /**
@@ -137,10 +147,10 @@ class Pagination {
     public function showLastPage() {
         $number_of_pages = $this->getNumberOfPages();
         $current_page = $this->getCurrentPage();
-        $start_pagination = intval($current_page / 10) * 10;
-        $end_pagination = $start_pagination ? $start_pagination + 10 : 10;
+        $start_pagination = intval($current_page / $this->_config['max_show_pages']) * $this->_config['max_show_pages'];
+        $end_pagination = $start_pagination ? $start_pagination + $this->_config['max_show_pages'] : $this->_config['max_show_pages'];
         
-        return $number_of_pages > 10 && $end_pagination < $number_of_pages;
+        return $number_of_pages > $this->_config['max_show_pages'] && $end_pagination < $number_of_pages;
     } 
     
     /**
@@ -149,7 +159,7 @@ class Pagination {
      */
     public function getStartPagination() {
         $current_page = $this->getCurrentPage();
-        $start_pagination = intval($current_page / 10) * 10;
+        $start_pagination = intval($current_page / $this->_config['max_show_pages']) * $this->_config['max_show_pages'];
         return $start_pagination ? $start_pagination : 1;
     }
     
@@ -160,8 +170,8 @@ class Pagination {
     public function getEndPagination() {
         $number_of_pages = $this->getNumberOfPages();
         $current_page = $this->getCurrentPage();
-        $start_pagination = intval($current_page / 10) * 10;
-        $end_pagination = $start_pagination ? $start_pagination + 10 : 10;
+        $start_pagination = intval($current_page / $this->_config['max_show_pages']) * $this->_config['max_show_pages'];
+        $end_pagination = $start_pagination ? $start_pagination + $this->_config['max_show_pages'] : $this->_config['max_show_pages'];
         
         return $end_pagination < $number_of_pages ? $end_pagination : $number_of_pages;
     }
@@ -181,5 +191,13 @@ class Pagination {
      */
     public function getEndResults() {
         return $this->_results_per_page;
+    }
+    
+    /**
+     * Devuelve la configuración del paginador
+     * @return array
+     */
+    public function getConfig() {
+        return $this->_config;
     }
 }
