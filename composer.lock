@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2807d9f01d765ee54d25379f152cd4df",
+    "content-hash": "6e501657cd615b812ccb5490f624e1cc",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -306,12 +306,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PowerOnSystem/WebFramework.git",
-                "reference": "8faa5ff46de71c9edad1959b9a816427dcf712f5"
+                "reference": "217153a576ca124a5b39108dd0c299aa32d7d8e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PowerOnSystem/WebFramework/zipball/8faa5ff46de71c9edad1959b9a816427dcf712f5",
-                "reference": "8faa5ff46de71c9edad1959b9a816427dcf712f5",
+                "url": "https://api.github.com/repos/PowerOnSystem/WebFramework/zipball/217153a576ca124a5b39108dd0c299aa32d7d8e5",
+                "reference": "217153a576ca124a5b39108dd0c299aa32d7d8e5",
                 "shasum": ""
             },
             "require": {
@@ -332,6 +332,7 @@
                 },
                 "files": [
                     "src/Application/Functions.php",
+                    "src/Application/Configuration.php",
                     "src/Application/Bootstrap.php"
                 ]
             },
@@ -354,7 +355,7 @@
                 "web design",
                 "web utilities"
             ],
-            "time": "2017-06-22 13:29:26"
+            "time": "2017-06-29 11:26:21"
         },
         {
             "name": "psr/log",
@@ -404,7 +405,69 @@
             "time": "2016-10-10T12:19:37+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "mmucklo/krumo",
+            "version": "v0.5.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mmucklo/krumo.git",
+                "reference": "133a5b2382ef8b9b2537f6049964c8d88c5e5ad1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mmucklo/krumo/zipball/133a5b2382ef8b9b2537f6049964c8d88c5e5ad1",
+                "reference": "133a5b2382ef8b9b2537f6049964c8d88c5e5ad1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.17"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "dev-master",
+                "phpmd/phpmd": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "class.krumo.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Kaloyan K. Tsvetkov",
+                    "email": "kaloyan@kaloyan.info"
+                },
+                {
+                    "name": "Stefan Thomas",
+                    "email": "moon@justmoon.de"
+                },
+                {
+                    "name": "Matthew J. Mucklo",
+                    "email": "mmucklo@gmail.com"
+                },
+                {
+                    "name": "Scott Baker",
+                    "email": "scott@perturb.org"
+                }
+            ],
+            "description": "KRUMO - version 2.0 of print_r(); and var_dump(); (with new updates)",
+            "keywords": [
+                "debug",
+                "debugging",
+                "krumo",
+                "pretty",
+                "print",
+                "print_r",
+                "var_dump"
+            ],
+            "time": "2016-03-15T07:21:38+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {

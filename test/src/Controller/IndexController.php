@@ -19,21 +19,29 @@
 
 namespace App\Controller;
 
-use PowerOn\Controller\FullController;
-
+use PowerOn\Controller\Controller;
+use PowerOn\Table\Table;
 /**
  * IndexController
  * @author Lucas Sosa
  * @version 0.1
  */
-class IndexController extends FullController {
+class IndexController extends Controller {
 
     public function index() {
-        $this->database;
+        $table = new Table(['border' => 1]);
+        
+        $table->head('id', 'Identificador')
+            ->head('name', 'Nombre')
+            ->head('years', 'Edad')
+        
+            ->foot('title', ['title' => 'Total', 'align' => 'right', 'colspan' => '2'])
+            ->foot('total', ['title' => '2 personas'])
+            
+            ->row(['id' => 15, 'name' => 'Carlos', 'years' => '25'])
+            ->row(['id' => 24, 'name' => 'Sergio', 'years' => '47'])
+        ;
+        
+        $this->view->set('clients_table', $table);
     }
-
-    public function error() {
-        $this->view->set('errors', $this->exception);
-    }
-
 }

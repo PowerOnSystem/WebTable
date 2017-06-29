@@ -36,7 +36,7 @@ class TableHelper extends Helper {
      * @return string
      */
     public function start(array $config, array $params = []) {
-        return '<table ' . html_serialize( $params + $config ) . '>';
+        return '<table ' . html_serialize( $params + $config ) . '>' . PHP_EOL;
     }
     
     /**
@@ -47,16 +47,16 @@ class TableHelper extends Helper {
     public function header(array $header) {
         $r = '';
         if ( $header ) {
-            $r .= '<thead>';
-                $r .= '<tr>';
+            $r .= '<thead>' . PHP_EOL;
+                $r .= '<tr>' . PHP_EOL;
                 foreach ($header as $hr) {
                     $title = array_trim($hr, 'title');
                     $r .= '<th ' . html_serialize($hr) . '>';
                         $r .= $title;
-                    $r .= '</th>';
+                    $r .= '</th>' . PHP_EOL;
                 }
-                $r .= '</tr>';
-            $r .= '</thead>';
+                $r .= '</tr>' . PHP_EOL;
+            $r .= '</thead>' . PHP_EOL;
         }
         
         return $r;
@@ -70,18 +70,18 @@ class TableHelper extends Helper {
     public function footer(array $footer) {
         $r = '';
         if ($footer) {
-            $r .= '<tfoot>';
-                $r .= '<tr>';
+            $r .= '<tfoot>' . PHP_EOL;
+                $r .= '<tr>' . PHP_EOL;
                 foreach ($footer as $fr) {
                     $title = array_trim($fr, 'title');
                     if ( $title !== NULL )  {
                         $r .= '<td ' . html_serialize($fr) . '>';
                             $r .= $title;
-                        $r .= '</td>';
+                        $r .= '</td>' . PHP_EOL;
                     }
                 }
-                $r .= '</tr>';
-            $r .= '</tfoot>';
+                $r .= '</tr>' . PHP_EOL;
+            $r .= '</tfoot>' . PHP_EOL;
         }
         
         return $r;
@@ -96,21 +96,21 @@ class TableHelper extends Helper {
     public function body(array $body, array $rows_params = []) {
         $r = '';
         if ($body) {
-            $r .= '<tbody>';
+            $r .= '<tbody>' . PHP_EOL;
             foreach ($body as $row_id => $rw) {
-                $r .= '<tr ' . ( key_exists($row_id, $rows_params) ? html_serialize($rows_params[$row_id]) : '' ) . '>';
+                $r .= '<tr ' . ( key_exists($row_id, $rows_params) ? html_serialize($rows_params[$row_id]) : '' ) . '>' . PHP_EOL;
                     foreach ($rw as $data) {
                         $link = array_trim($data, 'link');
                         $title = array_trim($data, 'title');
                         if ($title !== NULL) {
                             $r .= '<td ' . html_serialize($data) . '>';
                                 $r .= $link ? $this->html->link($title, $link) : $title;
-                            $r .= '</td>';
+                            $r .= '</td>' . PHP_EOL;
                         }
                     }
-                $r .= '</tr>';
+                $r .= '</tr>' . PHP_EOL;
             }
-            $r .= '</tbody>';
+            $r .= '</tbody>' . PHP_EOL;
         }
         
         return $r;
@@ -121,16 +121,16 @@ class TableHelper extends Helper {
      * @return string
      */
     public function end() {
-        return '</table>';
+        return '</table>' . PHP_EOL;
     }
     
     /**
      * Renderiza una tabla solicitada
-     * @see \PowerOn\Utility\Table
-     * @param \PowerOn\Utility\Table $table
+     * @see \PowerOn\Table\Table
+     * @param \PowerOn\Table\Table $table
      * @param $params [Opcional] Parámetros adicionales para la tabla
      */
-    public function table(\PowerOn\Utility\Table $table, array $params = []) {
+    public function render(Table $table, array $params = []) {
         $r = $this->start($table->getConfig(), $params);
         $r .= $this->header($table->getHeader());
         $r .= $this->footer($table->getFooter());
@@ -142,6 +142,7 @@ class TableHelper extends Helper {
     
     /**
      * Paginación de resultados
+     * @see \PowerOn\Table\Pagination
      * @param \PowerOn\Table\Pagination $pagination
      * @return string
      */

@@ -74,8 +74,7 @@ class Table {
     public $sort_mode = NULL;
     
     /**
-     * Inicia una nueva tabla
-     * @example
+     * Inicia una nueva tabla, ejemplo:<pre>
      * <code>
      *      $params = [
      *          'title' => 'Nueva Tabla',
@@ -87,6 +86,7 @@ class Table {
      *          'sort_mode' => 'asc'
      *      ]
      * </code>
+     * </pre>
      * @param mix $params Los parámetros en Array o el título de la tabla
      * @throws DevException
      */
@@ -112,8 +112,7 @@ class Table {
     }
     
     /**
-     * Inicia el encabezado de la tabla
-     * @example 
+     * Inicia el encabezado de la tabla, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header([
@@ -122,6 +121,8 @@ class Table {
      *          'client' => ['title' => 'Nro. de Cliente', 'sort_name' => 'internal_code']
      *      ]);
      * </code>
+     * </pre>
+     * 
      * @param array $header
      * @return \PowerOn\Utility\Table
      */
@@ -133,8 +134,7 @@ class Table {
     }
     
     /**
-     * Agrega un elemento al encabezado
-     * @example 
+     * Agrega un elemento al encabezado, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table
@@ -143,6 +143,7 @@ class Table {
      *          ->head('client', ['title' => 'Nro. de Cliente', 'sort_name' => 'internal_code'])
      *          ...
      * </code>
+     * </pre>
      * @param string $name El nombre de la columna
      * @param string|array $head Los parámetros de la columna o el título
      * @throws DevException
@@ -165,8 +166,7 @@ class Table {
     }
     
     /**
-     * Inicia el pie de la tabla
-     * @example 
+     * Inicia el pie de la tabla, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header(...);
@@ -175,6 +175,7 @@ class Table {
      *          'total' => ['title' => '$13599', class => 'green']
      *      ]);
      * </code>
+     * </pre>
      * @param array $footer
      * @return \PowerOn\Utility\Table
      */
@@ -186,8 +187,7 @@ class Table {
     }
     
     /**
-     * Agrega un elemento al pie
-     * @example 
+     * Agrega un elemento al pie, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header(...);
@@ -196,6 +196,7 @@ class Table {
      *          ->foot('total', ['title' => '$13599', class => 'green'])
      *          ...
      * </code>
+     * </pre>
      * @param string $name El nombre de la columna
      * @param string|array $foot Los parámetros de la columna o el título
      * @throws DevException
@@ -219,8 +220,7 @@ class Table {
     }
     
     /**
-     * Establece el contenido de una tabla
-     * @example 
+     * Establece el contenido de una tabla, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header([
@@ -240,6 +240,7 @@ class Table {
      *          ...
      *      ]);
      * </code>
+     * </pre>
      * @param array $body
      * @throws DevException
      */
@@ -251,8 +252,7 @@ class Table {
     }
     
     /**
-     * Agrega una fila completa al contenido de la tabla
-     * @example
+     * Agrega una fila completa al contenido de la tabla, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header([
@@ -267,9 +267,9 @@ class Table {
      *          ...
      *      ]);
      * </code>
-     * @param array $row
-     * @param array $row_params [Opcional] Parámetros de configuración de la fila 
-     * @example
+     * </pre>
+     * @param array $row El campo solicitado
+     * @param array $row_params [Opcional] Parámetros de configuración de la fila, ejemplo:<pre>
      * <code>
      *      $row_params = [
      *          'class' => 'warning'
@@ -277,14 +277,16 @@ class Table {
      *          ...
      *      ]
      * </code>
+     * </pre>
      * @param integer $row_id [Opcional] El puntero de la columna, por defecto es autoincremental
      * @return \PowerOn\Utility\Table
      */
     public function row(array $row, array $row_params = [], $row_id = NULL) {
-        $this->_rows_params[$row_id] = $row_params;
+        $this->_rows_params[$row_id !== NULL ? $row_id : $this->_pointer] = $row_params;
         foreach ($row as $column_name => $data) {
-            $this->cell($column_name, $data, $row_id !== NULL ? $row_id : count($this->_body));
+            $this->cell($column_name, $data, $row_id !== NULL ? $row_id : $this->_pointer);
         }
+        $this->next();
         return $this;
     }
     
@@ -300,8 +302,7 @@ class Table {
     }
     
     /**
-     * Agrega una celda a una fila del contenido de la tabla
-     * @example
+     * Agrega una celda a una fila del contenido de la tabla, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header([
@@ -315,6 +316,7 @@ class Table {
      *          ->cell('client', ['title' => '0021518', 'link' => ['controller' => 'clientes', 'action' => 'view', '21518']]
      *          ...
      * </code>
+     * </pre>
      * @param string $column_name El nombre de la columna
      * @param string|array $data Array con parámetros de la celda o el título
      * @param integer $row_id [Opcional] El identificador de la fila, si no se especifica se utiliza
@@ -323,7 +325,7 @@ class Table {
      * @return \PowerOn\Utility\Table
      */
     public function cell($column_name, $data, $row_id = NULL) {
-        if ( is_string($data) ) {
+        if ( is_string($data) || is_numeric($data) ) {
             $data = ['title' => $data];
         } else if ($data === NULL) {
             $data = ['title' => NULL];
@@ -342,8 +344,7 @@ class Table {
     }
     
     /**
-     * Modifica el puntero interno de la fila de la tabla
-     * @example
+     * Modifica el puntero interno de la fila de la tabla, ejemplo:<pre>
      * <code>
      *      $table = new Table();
      *      $table->header(...);
@@ -357,6 +358,7 @@ class Table {
      *          ->cell(...)
      *          ->cell(...);
      * </code>
+     * </pre>
      * @return \PowerOn\Utility\Table
      */
     public function next() {
