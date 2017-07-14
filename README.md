@@ -13,7 +13,7 @@ $ composer require poweronsystem/webtable: "0.1.0"
 ## Requisitos
 
 * PHP >= 5.4
-* poweronsystem/webframework: "^0.1.0"
+* poweronsystem/utility: "^0.1.1"
 
 ## Uso
 
