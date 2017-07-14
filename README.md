@@ -55,7 +55,22 @@ $table
   ->head('name', [...])
   ...
   
-//Creamos el cuerpo de la misma forma
+//El cuerpo de la tabla de la misma forma pero utilizando el método row de columna única
 $table
-  ->body(...)
+  ->row(['id' => 0030, 'name' => 'Carlos', ...])
+  ->row(['id' => 0031, 'name' => 'Sergio', ...], ['class' => 'alert', ...])
+  ->row(...)
+  ...
+  
+//Incluso podemos crear celda por celda
+$table
+  ->cell('id', '0030')
+  ->cell('name', 'Sergio')
+  ->cell('code', ['title' => 'Sergio', 'link' => ['controller' => 'clientes', 'action' => 'view', '21518'])
+  
+  ->next()
+  
+  ->cell('id', '0031'),
+  ->cell(...)
+  ...
 ```
