@@ -18,7 +18,6 @@
  */
 
 namespace PowerOn\Table;
-use PowerOn\Exceptions\DevException;
 use function \PowerOn\Application\array_trim;
 
 /**
@@ -88,13 +87,13 @@ class Table {
      * </code>
      * </pre>
      * @param mix $params Los parámetros en Array o el título de la tabla
-     * @throws DevException
+     * @throws \InvalidArgumentException
      */
     public function __construct( $params = NULL ) {
         if ( is_string($params) ) {
             $params = ['title' => $params];
         } else if ( $params && !is_array($params) ) {
-            throw new DevException('Formato de configuraci&oacute;n de tabla incorrecto', ['params' => $params]);
+            throw new \InvalidArgumentException('Formato de configuraci&oacute;n de tabla incorrecto');
         } else if ( !$params ) {
             $params = [];
         }
@@ -146,14 +145,14 @@ class Table {
      * </pre>
      * @param string $name El nombre de la columna
      * @param string|array $head Los parámetros de la columna o el título
-     * @throws DevException
+     * @throws \InvalidArgumentException
      * @return \PowerOn\Utility\Table
      */
     public function head($name, $head) {
         if ( is_string($head) ) {
             $head = ['title' => $head];
         } else if ( !is_array($head) ) {
-            throw new DevException('Formato de configuración de cabezera de tabla incorrecto', ['name' => $name, 'error' => $head]);
+            throw new \InvalidArgumentException('Formato de configuración de cabezera de tabla incorrecto');
         }
 
         $this->_header[$name] = $head + [
@@ -199,7 +198,7 @@ class Table {
      * </pre>
      * @param string $name El nombre de la columna
      * @param string|array $foot Los parámetros de la columna o el título
-     * @throws DevException
+     * @throws \InvalidArgumentException
      * @return \PowerOn\Utility\Table
      */
     public function foot($name, $foot) {
@@ -208,7 +207,7 @@ class Table {
         } else if ( $foot === NULL ) {
             $foot = ['title' => NULL];
         } else if ( !is_array($foot) ) {
-            throw new DevException('Formato de configuración de pie de tabla incorrecto', ['name' => $name, 'error' => $foot]);
+            throw new \InvalidArgumentException('Formato de configuración de pie de tabla incorrecto');
         }
 
         $this->_footer[$name] = $foot + [
@@ -242,7 +241,6 @@ class Table {
      * </code>
      * </pre>
      * @param array $body
-     * @throws DevException
      */
     public function body(array $body) {
         foreach ($body as $row_id => $row) {
@@ -321,7 +319,7 @@ class Table {
      * @param string|array $data Array con parámetros de la celda o el título
      * @param integer $row_id [Opcional] El identificador de la fila, si no se especifica se utiliza
      * el puntero interno de la tabla, si desea agregar una nueva fila utilize la función <b>Table::next()</b>
-     * @throws DevException
+     * @throws \InvalidArgumentException
      * @return \PowerOn\Utility\Table
      */
     public function cell($column_name, $data, $row_id = NULL) {
@@ -330,8 +328,7 @@ class Table {
         } else if ($data === NULL) {
             $data = ['title' => NULL];
         } else if ( !is_array($data) ) {
-            throw new DevException('Formato de configuración del contenido de la tabla incorrecto', 
-                    ['row_id' => $row_id, 'error' => $data]);
+            throw new \InvalidArgumentException('Formato de configuración del contenido de la tabla incorrecto');
         }
         
         $this->_body[$row_id][$column_name] = $data + [
