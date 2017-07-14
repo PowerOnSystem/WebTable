@@ -68,7 +68,7 @@ $table
   ->cell('name', 'Sergio')
   ->cell('code', ['title' => 'Sergio', 'link' => ['controller' => 'clientes', 'action' => 'view', '21518'])
   
-  ->next()
+  ->next() //Pasamos a la siguiente fila, etc...
   
   ->cell('id', '0031'),
   ->cell(...)
