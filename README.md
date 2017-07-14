@@ -13,7 +13,7 @@ $ composer require poweronsystem/webtable: "0.1.0"
 ## Requisitos
 
 * PHP >= 5.4
-* poweronsystem/webframework: "^0.1.0"
+* poweronsystem/utility: "^0.1.1"
 
 ## Uso
 
@@ -55,7 +55,22 @@ $table
   ->head('name', [...])
   ...
   
-//Creamos el cuerpo de la misma forma
+//El cuerpo de la tabla de la misma forma pero utilizando el método row de columna única
 $table
-  ->body(...)
+  ->row(['id' => 0030, 'name' => 'Carlos', ...])
+  ->row(['id' => 0031, 'name' => 'Sergio', ...], ['class' => 'alert', ...])
+  ->row(...)
+  ...
+  
+//Incluso podemos crear celda por celda
+$table
+  ->cell('id', '0030')
+  ->cell('name', 'Sergio')
+  ->cell('code', ['title' => 'Sergio', 'link' => ['controller' => 'clientes', 'action' => 'view', '21518'])
+  
+  ->next() //Pasamos a la siguiente fila, etc...
+  
+  ->cell('id', '0031'),
+  ->cell(...)
+  ...
 ```
