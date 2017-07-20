@@ -18,7 +18,7 @@
  */
 
 namespace PowerOn\Table;
-use function \PowerOn\Application\array_trim;
+use PowerOn\Utility\Arr;
 
 /**
  * Table
@@ -98,9 +98,9 @@ class Table {
             $params = [];
         }
         
-        $this->sortable = array_trim($params, 'sortable');
-        $this->sort_by = array_trim($params, 'sort_by');
-        $this->sort_mode = array_trim($params, 'sort_mode');
+        $this->sortable = Arr::trim($params, 'sortable');
+        $this->sort_by = Arr::trim($params, 'sort_by');
+        $this->sort_mode = Arr::trim($params, 'sort_mode');
         
         $this->_config = $params + [
             'title' => NULL,
@@ -244,7 +244,7 @@ class Table {
      */
     public function body(array $body) {
         foreach ($body as $row_id => $row) {
-            $row_param = array_trim($row, '_row_param');
+            $row_param = Arr::trim($row, '_row_param');
             $this->row($row, $row_param ? $row_param : [], $row_id);
         }
     }

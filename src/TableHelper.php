@@ -18,9 +18,10 @@
  */
 
 namespace PowerOn\Table;
-use PowerOn\View\Helper\Helper;
-use function \PowerOn\Application\html_serialize;
-use function \PowerOn\Application\array_trim;
+
+use PowerOn\Utility\Arr;
+use PowerOn\Utility\Str;
+use PowerOn\Helper\Helper;
 
 /**
  * Ayudante de Tablas
@@ -36,7 +37,7 @@ class TableHelper extends Helper {
      * @return string
      */
     public function start(array $config, array $params = []) {
-        return '<table ' . html_serialize( $params + $config ) . '>' . PHP_EOL;
+        return '<table ' . Str::htmlserialize( $params + $config ) . '>' . PHP_EOL;
     }
     
     /**
@@ -50,8 +51,8 @@ class TableHelper extends Helper {
             $r .= '<thead>' . PHP_EOL;
                 $r .= '<tr>' . PHP_EOL;
                 foreach ($header as $hr) {
-                    $title = array_trim($hr, 'title');
-                    $r .= '<th ' . html_serialize($hr) . '>';
+                    $title = Arr::trim($hr, 'title');
+                    $r .= '<th ' . Str::htmlserialize($hr) . '>';
                         $r .= $title;
                     $r .= '</th>' . PHP_EOL;
                 }
@@ -73,9 +74,9 @@ class TableHelper extends Helper {
             $r .= '<tfoot>' . PHP_EOL;
                 $r .= '<tr>' . PHP_EOL;
                 foreach ($footer as $fr) {
-                    $title = array_trim($fr, 'title');
+                    $title = Arr::trim($fr, 'title');
                     if ( $title !== NULL )  {
-                        $r .= '<td ' . html_serialize($fr) . '>';
+                        $r .= '<td ' . Str::htmlserialize($fr) . '>';
                             $r .= $title;
                         $r .= '</td>' . PHP_EOL;
                     }
@@ -98,12 +99,12 @@ class TableHelper extends Helper {
         if ($body) {
             $r .= '<tbody>' . PHP_EOL;
             foreach ($body as $row_id => $rw) {
-                $r .= '<tr ' . ( key_exists($row_id, $rows_params) ? html_serialize($rows_params[$row_id]) : '' ) . '>' . PHP_EOL;
+                $r .= '<tr ' . ( key_exists($row_id, $rows_params) ? Str::htmlserialize($rows_params[$row_id]) : '' ) . '>' . PHP_EOL;
                     foreach ($rw as $data) {
-                        $link = array_trim($data, 'link');
-                        $title = array_trim($data, 'title');
+                        $link = Arr::trim($data, 'link');
+                        $title = Arr::trim($data, 'title');
                         if ($title !== NULL) {
-                            $r .= '<td ' . html_serialize($data) . '>';
+                            $r .= '<td ' . Str::htmlserialize($data) . '>';
                                 $r .= $link ? $this->html->link($title, $link) : $title;
                             $r .= '</td>' . PHP_EOL;
                         }
