@@ -5,7 +5,7 @@ WebTable es una clase para la creación y manipulación de tablas y paginación 
 ## Instalación vía Composer
 
 Podés instalar WebTable vía
-[Composer](https://getcomposer.org).  a travéz de la consola:
+[Composer](https://getcomposer.org)  a través de la consola:
 
 ``` bash
 $ composer require poweronsystem/webtable: "0.1.0"
